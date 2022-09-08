@@ -29,7 +29,7 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemViagemAction() {
-		System.out.println("onMenuItemViagemAction");
+		loadView("/gui/ViagemList.fxml");
 	}
 	
 	@FXML
