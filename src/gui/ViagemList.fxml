@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="359.0" prefWidth="579.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<VBox prefHeight="359.0" prefWidth="579.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViagemListController">
    <children>
       <Label text="Registro de viagens">
          <font>
@@ -18,15 +17,15 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" text="Nova viagem" />
+          <Button fx:id="btNovaViagem" mnemonicParsing="false" onAction="#onBtNovaViagemAction" text="Nova viagem" />
         </items>
       </ToolBar>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewViagem" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="122.0" text="Rota" />
-          <TableColumn prefWidth="82.0" text="Data" />
-            <TableColumn prefWidth="92.0" text="Hora" />
-            <TableColumn prefWidth="103.0" text="Passageiro" />
+          <TableColumn fx:id="tableColumnRota" prefWidth="122.0" text="Rota" />
+          <TableColumn fx:id="tableColumnData" prefWidth="82.0" text="Data" />
+            <TableColumn fx:id="tableColumnHora" prefWidth="92.0" text="Hora" />
+            <TableColumn fx:id="tableColumnPassageiro" prefWidth="103.0" text="Passageiro" />
         </columns>
       </TableView>
    </children>
