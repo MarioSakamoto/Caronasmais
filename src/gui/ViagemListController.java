@@ -1,9 +1,12 @@
-package gui;
+ package gui;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,9 +16,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DataFormat;
 import javafx.stage.Stage;
 import model.entities.Viagem;
+import model.services.ViagemService;
 
 public class ViagemListController implements Initializable{
 
+	private ViagemService service;
+	
 	@FXML
 	private TableView<Viagem> tableViewViagem;  
 	
@@ -34,9 +40,16 @@ public class ViagemListController implements Initializable{
 	@FXML
 	Button btNovaViagem;
 	
+	private ObservableList<Viagem> obsList;
+	
+	
 	@FXML
 	public void onBtNovaViagemAction() {
 		System.out.println("onBtNovaViagemAction");
+	}
+	
+	public void setViagemService(ViagemService service) {
+		this.service = service;
 	}
 	
 	@Override
@@ -52,5 +65,15 @@ public class ViagemListController implements Initializable{
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewViagem.prefHeightProperty().bind(stage.heightProperty());
+	}
+	
+	public void updateTableView() {
+		if(service == null) {
+			throw new IllegalStateException("Service was null");
+		}
+		List<Viagem> list = service.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewViagem.setItems(obsList);
+		
 	}
 }

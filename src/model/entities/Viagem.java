@@ -3,14 +3,12 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javafx.scene.input.DataFormat;
-
 public class Viagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private DataFormat data;
-	private DataFormat hora;
+	private String data;
+	private String hora;
 	private String saindoDe;
 	private String indoPara;
 	
@@ -18,7 +16,7 @@ public class Viagem implements Serializable {
 	public Viagem() {
 	}
 
-	public Viagem(DataFormat data, DataFormat hora, String saindoDe, String indoPara) {
+	public Viagem(String data, String hora, String saindoDe, String indoPara) {
 		super();
 		this.data = data;
 		this.hora = hora;
@@ -28,19 +26,19 @@ public class Viagem implements Serializable {
 
 
 
-	public DataFormat getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(DataFormat data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
-	public DataFormat getHora() {
+	public String getHora() {
 		return hora;
 	}
 
-	public void setHora(DataFormat hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
 
