@@ -1,4 +1,4 @@
- package gui;
+package gui;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +47,7 @@ public class ViagemListController implements Initializable{
 	private TableColumn<Viagem, String> tableColumnPassageiro;
 	
 	@FXML
-	Button btNovaViagem;
+	private Button btNovaViagem;
 	
 	private ObservableList<Viagem> obsList;
 	
@@ -55,7 +55,8 @@ public class ViagemListController implements Initializable{
 	@FXML
 	public void onBtNovaViagemAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/FormatoViagem.fxml", parentStage);
+		Viagem obj = new Viagem();
+		createDialogForm(obj, "/gui/FormatoViagem.fxml", parentStage);
 	}
 	
 	public void setViagemService(ViagemService service) {
@@ -86,10 +87,14 @@ public class ViagemListController implements Initializable{
 		tableViewViagem.setItems(obsList);	
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Viagem obj, String absoluteName, Stage parentStage) {
 		try {
 			 FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			 Pane pane = loader.load();
+			 
+			 FomatoViagemController controller = loader.getController();
+			 controller.setViagem(obj);
+			 controller.updateFormData();
 			 
 			 Stage dialogStage = new Stage();
 			 dialogStage.setTitle("Entre com os dados da Viagem");

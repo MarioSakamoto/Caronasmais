@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.entities.Viagem;
 
 public class FomatoViagemController implements Initializable{
+	
+	private Viagem entity;
 	
 	@FXML
 	private TextField txtDia;
@@ -29,6 +32,11 @@ public class FomatoViagemController implements Initializable{
 	@FXML 
 	private Button btCancel;
 	
+	public void setViagem(Viagem entity) {
+		this.entity = entity;
+	}
+	
+	
 	@FXML
 	public void onBtSaveAction() {
 		System.out.println("onBtSaveAction");
@@ -47,5 +55,15 @@ public class FomatoViagemController implements Initializable{
 	
 	 private void initializeNodes() {
 		 Constraints.setTextFieldMaxLength(txtDia, 30);
+	 }
+	 
+	 public void updateFormData() {
+		 if(entity == null) {
+			 throw new IllegalStateException("Entity was null");
+		 }
+		 txtDia.setText(entity.getDia());
+		 txtHora.setText(entity.getHora());
+		 txtSaindoDe.setText(entity.getSaindoDe());
+		 txtIndoPara.setText(entity.getIndoPara());
 	 }
 }
