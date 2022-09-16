@@ -5,10 +5,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="199.0" prefWidth="385.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<VBox prefHeight="199.0" prefWidth="385.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label prefHeight="37.0" prefWidth="139.0" text="About">
+      <Label prefHeight="37.0" prefWidth="139.0" text="CARONA +">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -16,7 +15,7 @@
             <Insets left="20.0" top="10.0" />
          </padding>
       </Label>
-      <Label text="JavaFX application demo">
+      <Label text="Agora ficou mais fácil agendar uma viagem.">
          <padding>
             <Insets left="20.0" />
          </padding>

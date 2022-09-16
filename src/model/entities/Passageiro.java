@@ -8,7 +8,7 @@ public class Passageiro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
+	private String nome;
 	private String telefone;
 	private String enderecoDeSaida;
 	private String enderecoDeChegada;
@@ -19,10 +19,10 @@ public class Passageiro implements Serializable{
 	public Passageiro() {
 	}
 
-	public Passageiro(String name, String telefone, String enderecoDeSaida, String enderecoDeChegada,
+	public Passageiro(String nome, String telefone, String enderecoDeSaida, String enderecoDeChegada,
 			Integer volumeDeBagagem, Viagem viagem) {
 		super();
-		this.name = name;
+		this.nome = nome;
 		this.telefone = telefone;
 		this.enderecoDeSaida = enderecoDeSaida;
 		this.enderecoDeChegada = enderecoDeChegada;
@@ -31,11 +31,11 @@ public class Passageiro implements Serializable{
 	}
 
 	public String getName() {
-		return name;
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String nome) {
+		this.nome = nome;
 	}
 
 	public String getTelefone() {
@@ -84,7 +84,7 @@ public class Passageiro implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(enderecoDeChegada, enderecoDeSaida, name, telefone, viagem, volumeDeBagagem);
+		return Objects.hash(enderecoDeChegada, enderecoDeSaida, nome, telefone, viagem, volumeDeBagagem);
 	}
 
 	@Override
@@ -97,14 +97,14 @@ public class Passageiro implements Serializable{
 			return false;
 		Passageiro other = (Passageiro) obj;
 		return Objects.equals(enderecoDeChegada, other.enderecoDeChegada)
-				&& Objects.equals(enderecoDeSaida, other.enderecoDeSaida) && Objects.equals(name, other.name)
+				&& Objects.equals(enderecoDeSaida, other.enderecoDeSaida) && Objects.equals(nome, other.nome)
 				&& Objects.equals(telefone, other.telefone) && Objects.equals(viagem, other.viagem)
 				&& Objects.equals(volumeDeBagagem, other.volumeDeBagagem);
 	}
 
 	@Override
 	public String toString() {
-		return "Passageiro [name=" + name + ", telefone=" + telefone + ", enderecoDeSaida=" + enderecoDeSaida
+		return "Passageiro [nome=" + nome + ", telefone=" + telefone + ", enderecoDeSaida=" + enderecoDeSaida
 				+ ", enderecoDeChegada=" + enderecoDeChegada + ", volumeDeBagagem=" + volumeDeBagagem + ", viagem="
 				+ viagem + "]";
 	}

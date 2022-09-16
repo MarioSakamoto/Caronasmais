@@ -7,7 +7,7 @@ public class Viagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String data;
+	private String dia;
 	private String hora;
 	private String saindoDe;
 	private String indoPara;
@@ -16,9 +16,9 @@ public class Viagem implements Serializable {
 	public Viagem() {
 	}
 
-	public Viagem(String data, String hora, String saindoDe, String indoPara) {
+	public Viagem(String dia, String hora, String saindoDe, String indoPara) {
 		super();
-		this.data = data;
+		this.dia = dia;
 		this.hora = hora;
 		this.saindoDe = saindoDe;
 		this.indoPara = indoPara;
@@ -26,12 +26,12 @@ public class Viagem implements Serializable {
 
 
 
-	public String getData() {
-		return data;
+	public String getDia() {
+		return dia;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setDia(String dia) {
+		this.dia = dia;
 	}
 
 	public String getHora() {
@@ -65,7 +65,7 @@ public class Viagem implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(data, hora, indoPara, saindoDe);
+		return Objects.hash(dia, hora, indoPara, saindoDe);
 	}
 
 	@Override
@@ -77,14 +77,16 @@ public class Viagem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Viagem other = (Viagem) obj;
-		return Objects.equals(data, other.data) && Objects.equals(hora, other.hora)
+		return Objects.equals(dia, other.dia) && Objects.equals(hora, other.hora)
 				&& Objects.equals(indoPara, other.indoPara) && Objects.equals(saindoDe, other.saindoDe);
 	}
 
 	@Override
 	public String toString() {
-		return "Viagem [data=" + data + ", hora=" + hora + ", saindoDe=" + saindoDe + ", indoPara=" + indoPara + "]";
+		return "Viagem [dia=" + dia + ", hora=" + hora + ", saindoDe=" + saindoDe + ", indoPara=" + indoPara + "]";
 	}
+
+
 
 	
 }

@@ -1,19 +1,28 @@
  package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DataFormat;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Viagem;
 import model.services.ViagemService;
@@ -44,8 +53,9 @@ public class ViagemListController implements Initializable{
 	
 	
 	@FXML
-	public void onBtNovaViagemAction() {
-		System.out.println("onBtNovaViagemAction");
+	public void onBtNovaViagemAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		createDialogForm("/gui/FormatoViagem.fxml", parentStage);
 	}
 	
 	public void setViagemService(ViagemService service) {
@@ -73,7 +83,25 @@ public class ViagemListController implements Initializable{
 		}
 		List<Viagem> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		tableViewViagem.setItems(obsList);
-		
+		tableViewViagem.setItems(obsList);	
+	}
+	
+	private void createDialogForm(String absoluteName, Stage parentStage) {
+		try {
+			 FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			 Pane pane = loader.load();
+			 
+			 Stage dialogStage = new Stage();
+			 dialogStage.setTitle("Entre com os dados da Viagem");
+			 dialogStage.setScene(new Scene(pane));
+			 dialogStage.setResizable(false);
+			 dialogStage.initOwner(parentStage);
+			 dialogStage.initModality(Modality.WINDOW_MODAL);
+			 dialogStage.showAndWait();
+			 
+		}
+		catch(IOException e) { 
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
 	}
 }
