@@ -8,40 +8,49 @@ public class Passageiro implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Integer id;
 	private String nome;
 	private String telefone;
 	private String enderecoDeSaida;
 	private String enderecoDeChegada;
-	private Integer volumeDeBagagem;
 	
 	private Viagem viagem;
 	
 	public Passageiro() {
 	}
 
-	public Passageiro(String nome, String telefone, String enderecoDeSaida, String enderecoDeChegada,
-			Integer volumeDeBagagem, Viagem viagem) {
+	
+
+	public Passageiro(Integer id, String nome, String telefone, String enderecoDeSaida, String enderecoDeChegada,
+			Viagem viagem) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.enderecoDeSaida = enderecoDeSaida;
 		this.enderecoDeChegada = enderecoDeChegada;
-		this.volumeDeBagagem = volumeDeBagagem;
 		this.viagem = viagem;
 	}
 
-	public String getName() {
-		return nome;
+	
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setName(String nome) {
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
 	public String getTelefone() {
 		return telefone;
 	}
-
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
@@ -49,7 +58,6 @@ public class Passageiro implements Serializable{
 	public String getEnderecoDeSaida() {
 		return enderecoDeSaida;
 	}
-
 	public void setEnderecoDeSaida(String enderecoDeSaida) {
 		this.enderecoDeSaida = enderecoDeSaida;
 	}
@@ -57,23 +65,13 @@ public class Passageiro implements Serializable{
 	public String getEnderecoDeChegada() {
 		return enderecoDeChegada;
 	}
-
 	public void setEnderecoDeChegada(String enderecoDeChegada) {
 		this.enderecoDeChegada = enderecoDeChegada;
-	}
-
-	public Integer getVolumeDeBagagem() {
-		return volumeDeBagagem;
-	}
-
-	public void setVolumeDeBagagem(Integer volumeDeBagagem) {
-		this.volumeDeBagagem = volumeDeBagagem;
 	}
 
 	public Viagem getViagem() {
 		return viagem;
 	}
-
 	public void setViagem(Viagem viagem) {
 		this.viagem = viagem;
 	}
@@ -81,10 +79,10 @@ public class Passageiro implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(enderecoDeChegada, enderecoDeSaida, nome, telefone, viagem, volumeDeBagagem);
+		return Objects.hash(enderecoDeChegada, enderecoDeSaida, id, nome, telefone, viagem);
 	}
 
 	@Override
@@ -97,17 +95,16 @@ public class Passageiro implements Serializable{
 			return false;
 		Passageiro other = (Passageiro) obj;
 		return Objects.equals(enderecoDeChegada, other.enderecoDeChegada)
-				&& Objects.equals(enderecoDeSaida, other.enderecoDeSaida) && Objects.equals(nome, other.nome)
-				&& Objects.equals(telefone, other.telefone) && Objects.equals(viagem, other.viagem)
-				&& Objects.equals(volumeDeBagagem, other.volumeDeBagagem);
+				&& Objects.equals(enderecoDeSaida, other.enderecoDeSaida) && Objects.equals(id, other.id)
+				&& Objects.equals(nome, other.nome) && Objects.equals(telefone, other.telefone)
+				&& Objects.equals(viagem, other.viagem);
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "Passageiro [nome=" + nome + ", telefone=" + telefone + ", enderecoDeSaida=" + enderecoDeSaida
-				+ ", enderecoDeChegada=" + enderecoDeChegada + ", volumeDeBagagem=" + volumeDeBagagem + ", viagem="
-				+ viagem + "]";
-	}
-
-	
+		return "Passageiro [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", enderecoDeSaida="
+				+ enderecoDeSaida + ", enderecoDeChegada=" + enderecoDeChegada + ", viagem=" + viagem + "]";
+	}	
 }

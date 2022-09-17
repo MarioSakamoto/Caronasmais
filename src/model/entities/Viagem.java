@@ -1,71 +1,46 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Viagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String dia;
-	private String hora;
-	private String saindoDe;
-	private String indoPara;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	
+	private Integer id;
+	private Date dataHora;
 	
 	public Viagem() {
 	}
 
-	public Viagem(String dia, String hora, String saindoDe, String indoPara) {
-		super();
-		this.dia = dia;
-		this.hora = hora;
-		this.saindoDe = saindoDe;
-		this.indoPara = indoPara;
+	public Viagem( Integer id, Date dataHora) {
+		this.id = id;
+		this.dataHora = dataHora;
 	}
 
-
-
-	public String getDia() {
-		return dia;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setDia(String dia) {
-		this.dia = dia;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getHora() {
-		return hora;
+	public Date getDataHora() {
+		return dataHora;
 	}
 
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setDataHora(Date dataHora) {
+		this.dataHora = dataHora;
 	}
 
-	public String getSaindoDe() {
-		return saindoDe;
-	}
-
-	public void setSaindoDe(String saindoDe) {
-		this.saindoDe = saindoDe;
-	}
-
-	public String getIndoPara() {
-		return indoPara;
-	}
-
-	public void setIndoPara(String indoPara) {
-		this.indoPara = indoPara;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(dia, hora, indoPara, saindoDe);
+		return Objects.hash(dataHora, id);
 	}
 
 	@Override
@@ -77,16 +52,11 @@ public class Viagem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Viagem other = (Viagem) obj;
-		return Objects.equals(dia, other.dia) && Objects.equals(hora, other.hora)
-				&& Objects.equals(indoPara, other.indoPara) && Objects.equals(saindoDe, other.saindoDe);
+		return Objects.equals(dataHora, other.dataHora) && Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Viagem [dia=" + dia + ", hora=" + hora + ", saindoDe=" + saindoDe + ", indoPara=" + indoPara + "]";
+		return "Viagem [id=" + id + ", dataHora=" + dataHora + "]";
 	}
-
-
-
-	
 }
