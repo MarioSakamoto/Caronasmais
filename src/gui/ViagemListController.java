@@ -35,16 +35,13 @@ public class ViagemListController implements Initializable{
 	private TableView<Viagem> tableViewViagem;  
 	
 	@FXML
-	private TableColumn<Viagem, String> tableColumnRota;
+	private TableColumn<Viagem, Integer> tableColumnId;
 	
 	@FXML
-	private TableColumn<Viagem, DataFormat> tableColumnData;
+	private TableColumn<Viagem, DataFormat> tableColumnDataEHora;
 	
 	@FXML
-	private TableColumn<Viagem, DataFormat> tableColumnHora;
-	
-	@FXML
-	private TableColumn<Viagem, String> tableColumnPassageiro;
+	private TableColumn<Viagem, String> tableColumnNomeDoPassageiro;
 	
 	@FXML
 	private Button btNovaViagem;
@@ -69,10 +66,9 @@ public class ViagemListController implements Initializable{
 	}
 
 	private void initializeNodes() {
-		tableColumnRota.setCellValueFactory(new PropertyValueFactory<>("rota"));
-		tableColumnRota.setCellValueFactory(new PropertyValueFactory<>("data"));
-		tableColumnRota.setCellValueFactory(new PropertyValueFactory<>("hora"));
-		tableColumnRota.setCellValueFactory(new PropertyValueFactory<>("passageiro"));
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+		tableColumnDataEHora.setCellValueFactory(new PropertyValueFactory<>("Data e Hora"));
+		tableColumnNomeDoPassageiro.setCellValueFactory(new PropertyValueFactory<>("Nome do Passageiro"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewViagem.prefHeightProperty().bind(stage.heightProperty());

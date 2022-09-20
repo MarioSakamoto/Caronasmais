@@ -22,10 +22,9 @@
       </ToolBar>
       <TableView fx:id="tableViewViagem" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnRota" prefWidth="122.0" text="Rota" />
-          <TableColumn fx:id="tableColumnData" prefWidth="82.0" text="Data" />
-            <TableColumn fx:id="tableColumnHora" prefWidth="92.0" text="Hora" />
-            <TableColumn fx:id="tableColumnPassageiro" prefWidth="103.0" text="Passageiro" />
+          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="tableColumnDataEHora" prefWidth="184.0" text="Data e Hora" />
+            <TableColumn fx:id="tableColumnNomeDoPassageiro" prefWidth="191.0" text="Nome do Passageiro" />
         </columns>
       </TableView>
    </children>
