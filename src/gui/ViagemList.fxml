@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -8,23 +9,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="359.0" prefWidth="579.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViagemListController">
+<VBox prefHeight="467.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViagemListController">
    <children>
-      <Label text="Registro de viagens">
+      <Label text="Registro de Viagens">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
+         <padding>
+            <Insets left="5.0" top="5.0" />
+         </padding>
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btNovaViagem" mnemonicParsing="false" onAction="#onBtNovaViagemAction" text="Nova viagem" />
+          <Button fx:id="btNovaViagem" mnemonicParsing="false" onAction="#onBtNovaViagemAction" text="Nova Viagem" />
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewViagem" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewDepartment" prefHeight="321.0" prefWidth="509.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="tableColumnDataEHora" prefWidth="184.0" text="Data e Hora" />
-            <TableColumn fx:id="tableColumnNomeDoPassageiro" prefWidth="191.0" text="Nome do Passageiro" />
+          <TableColumn fx:id="tableColumnData" prefWidth="139.0" text="Data" />
+            <TableColumn fx:id="tableColumnPassageiroId" prefWidth="89.0" text="Passageiro Id" />
+            <TableColumn fx:id="tableColumnPassageiroNome" prefWidth="112.0" text="Passageiro Nome" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="56.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="93.0" />
         </columns>
       </TableView>
    </children>

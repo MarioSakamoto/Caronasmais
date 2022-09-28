@@ -17,7 +17,6 @@ import model.dao.PassageiroDao;
 import model.entities.Passageiro;
 import model.entities.Viagem;
 
-
 public class PassageiroDaoJDBC implements PassageiroDao {
 
 	private Connection conn;
@@ -32,25 +31,25 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO passageiro "
-					+ "(Nome, Telefone, EnderecoDeSaida, EnderecoDeChegada, VolumeDeBagagem, ViagemDia) "
+					+ "(Id, Nome, Telefone, SaindoDe, IndoPara, ViagemId) "
 					+ "VALUES "
 					+ "(?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setString(1, obj.getNome());
-			st.setString(2, obj.getTelefone());
-			st.setString(3, obj.getEnderecoDeSaida());
-			st.setString(4, obj.getEnderecoDeChegada());
-			st.setInt(5, obj.getVolumeDeBagagem());
-			st.setString(6, obj.getViagem().getDia());
+			st.setInt(1, obj.getId());
+			st.setString(2, obj.getNome());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getSaindoDe());
+			st.setString(5, obj.getIndoPara());
+			st.setInt(6, obj.getViagem().getId());
 			
 			int rowsAffected = st.executeUpdate();
 			
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
-					String nome = rs.getString(nome);
-					obj.setNome(nome);
+					int id = rs.getInt(1);
+					obj.setId(id);
 				}
 				DB.closeResultSet(rs);
 			}
@@ -72,16 +71,15 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		try {
 			st = conn.prepareStatement(
 					"UPDATE passageiro "
-					+ "SET Nome = ?, Telefone = ?, EnderecoDeSaida = ?, EnderecoDeChegada = ?,"
-					+ "VolumeDeBagagem = ?, ViagemDia =?"
-					+ "WHERE Nome = ?");
+					+ "SET Id = ?, Nome = ?, Telefone = ?, SaindoDe = ?, IndoPara = ?, ViagemId = ? "
+					+ "WHERE Id = ?");
 			
-			st.setString(1, obj.getNome());
-			st.setString(2, obj.getTelefone());
-			st.setString(3, obj.getEnderecoDeSaida());
-			st.setString(4, obj.getEnderecoDeChegada());
-			st.setInt(5, obj.getVolumeDeBagagem());
-			st.setString(6, obj.getViagem().getDia());
+			st.setInt(1, obj.getId());
+			st.setString(2, obj.getNome());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getSaindoDe());
+			st.setString(5, obj.getIndoPara());
+			st.setInt(6, obj.getViagem().getId());
 			
 			st.executeUpdate();
 		}
@@ -94,12 +92,12 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 	}
 
 	@Override
-	public void deleteById(String nome) {
+	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("DELETE FROM passageiro WHERE Nome = ?");
+			st = conn.prepareStatement("DELETE FROM passageiro WHERE Id = ?");
 			
-			st.setString(nome);
+			st.setInt(1, id);
 			
 			st.executeUpdate();
 		}
@@ -112,17 +110,17 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 	}
 
 	@Override
-	public Passageiro findById(String nome) {
+	public Passageiro findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT passageiro.*, viagem.dia as viagemDia "
+					"SELECT passageiro.*,viagem.Nome as ViagemName "
 					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemDia = viagem.Dia "
-					+ "WHERE passageiro.Nome = ?");
+					+ "ON passageiro.ViagemId = viagem.Id "
+					+ "WHERE passageiro.Id = ?");
 			
-			st.setString(nome);
+			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				Viagem viagem = instantiateViagem(rs);
@@ -142,20 +140,20 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 
 	private Passageiro instantiatePassageiro(ResultSet rs, Viagem viagem) throws SQLException {
 		Passageiro obj = new Passageiro();
-		
-		
-		obj.getNome(rs.getString("Nome"));
+		obj.setId(rs.getInt("Id"));
+		obj.setNome(rs.getString("Nome"));
 		obj.setTelefone(rs.getString("Telefone"));
-		obj.setEnderecoDeSaida(rs.getString("EnderecoDeSaida"));
-		obj.setEnderecoDeChegada(rs.getString("EnderecoDeChegada"));
-		obj.setVolumeDeBagagem(rs.getInt("VolumeDeBagagem"));
+		obj.setSaindoDe(rs.getString("SaindoDe"));
+		obj.setIndoPara(rs.getString("IndoPara"));
 		obj.setViagem(viagem);
+				
 		return obj;
 	}
 
 	private Viagem instantiateViagem(ResultSet rs) throws SQLException {
 		Viagem viagem = new Viagem();
-		viagem.setDia(rs.getString("ViagemDia"));
+		viagem.setId(rs.getInt("ViagemId"));
+		viagem.setData(rs.getString("Data"));
 		return viagem;
 	}
 
@@ -165,23 +163,23 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT passageiro.*,viagem.dia as ViagemDia"
+					"SELECT passageiro.*,viagem.Nome as ViagemNome "
 					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemDia = viagem.Dia "
+					+ "ON passageiro.ViagemId = viagem.Id "
 					+ "ORDER BY Name");
 			
 			rs = st.executeQuery();
 			
 			List<Passageiro> list = new ArrayList<>();
-			Map<String, Viagem> map = new HashMap<>();
+			Map<Integer, Viagem> map = new HashMap<>();
 			
 			while (rs.next()) {
 				
-				Viagem viagem = map.get(rs.getString("ViagemDia"));
+				Viagem viagem = map.get(rs.getInt("ViagemId"));
 				
 				if (viagem == null) {
 					viagem = instantiateViagem(rs);
-					map.put(rs.getInt("ViagemDia"), viagem);
+					map.put(rs.getInt("ViagemId"), viagem);
 				}
 				
 				Passageiro obj = instantiatePassageiro(rs, viagem);
@@ -204,26 +202,26 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT passageiro.*,viagem.dia as ViagemDia "
+					"SELECT passageiro.*,viagem.Nome as ViagemNome "
 					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemDia = Viagem.Dia "
-					+ "WHERE ViagemDia = ? "
+					+ "ON passageiro.ViagemId = viagem.Id "
+					+ "WHERE ViagemId = ? "
 					+ "ORDER BY Name");
 			
-			st.setString(viagem.getDia());
+			st.setInt(1, viagem.getId());
 			
 			rs = st.executeQuery();
 			
 			List<Passageiro> list = new ArrayList<>();
-			Map<String, Viagem> map = new HashMap<>();
+			Map<Integer, Viagem> map = new HashMap<>();
 			
 			while (rs.next()) {
 				
-				Viagem viagem = map.get(rs.getString("ViagemDia"));
+				Viagem viagemId = map.get(rs.getInt("ViagemId"));
 				
 				if (viagem == null) {
 					viagem = instantiateViagem(rs);
-					map.put(rs.getString("ViagemDia"), viagem);
+					map.put(rs.getInt("ViagemId"), viagem);
 				}
 				
 				Passageiro obj = instantiatePassageiro(rs, viagem);

@@ -1,25 +1,22 @@
 package model.entities;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 public class Viagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	
 	private Integer id;
-	private Date dataHora;
+	private String data;
 	
 	public Viagem() {
 	}
 
-	public Viagem( Integer id, Date dataHora) {
+	public Viagem(Integer id, String data) {
+		super();
 		this.id = id;
-		this.dataHora = dataHora;
+		this.data = data;
 	}
 
 	public Integer getId() {
@@ -30,17 +27,21 @@ public class Viagem implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataHora() {
-		return dataHora;
+	public String getData() {
+		return data;
 	}
 
-	public void setDataHora(Date dataHora) {
-		this.dataHora = dataHora;
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dataHora, id);
+		return Objects.hash(data, id);
 	}
 
 	@Override
@@ -52,11 +53,11 @@ public class Viagem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Viagem other = (Viagem) obj;
-		return Objects.equals(dataHora, other.dataHora) && Objects.equals(id, other.id);
+		return Objects.equals(data, other.data) && Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Viagem [id=" + id + ", dataHora=" + dataHora + "]";
+		return "Viagem [id=" + id + ", data=" + data + "]";
 	}
 }

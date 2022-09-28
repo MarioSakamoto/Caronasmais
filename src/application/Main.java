@@ -23,7 +23,7 @@ public class Main extends Application {
 			
 			mainScene = new Scene(scrollPane);
 			primaryStage.setScene(mainScene);
-			primaryStage.setTitle("Carona+");
+			primaryStage.setTitle("Carona +");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -37,4 +37,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+	
 }

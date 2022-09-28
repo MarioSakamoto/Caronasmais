@@ -8,19 +8,19 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
-      <VBox prefHeight="381.0" prefWidth="579.0">
+      <VBox prefHeight="337.0" prefWidth="510.0">
          <children>
             <MenuBar>
               <menus>
-                <Menu mnemonicParsing="false" text="Iniciar">
+                <Menu mnemonicParsing="false" text="Iniciar Cadastro">
                   <items>
-                    <MenuItem fx:id="menuItemViagem" mnemonicParsing="false" onAction="#onMenuItemViagemAction" text="Viagem" />
-                        <MenuItem fx:id="menuItemPassageiro" mnemonicParsing="false" onAction="#onMenuItemPassageiroAction" text="Passageiro" />
+                    <MenuItem fx:id="menuItemPassageiro" mnemonicParsing="false" onAction="#onMenuItemPassageiroAction" text="Passageiro" />
+                        <MenuItem fx:id="menuItemViagem" mnemonicParsing="false" onAction="#onMenuItemViagemAction" text="Viagem" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Informações">
                   <items>
-                    <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="Sobre" />
+                    <MenuItem fx:id="menuItemSobre" mnemonicParsing="false" onAction="#onMenuItemInformacoesAction" text="Sobre" />
                   </items>
                 </Menu>
               </menus>

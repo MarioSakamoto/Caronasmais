@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="159.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FomatoViagemController">
+<AnchorPane prefHeight="159.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViagemFormController">
    <children>
-      <GridPane layoutX="32.0" layoutY="27.0" prefHeight="136.0" prefWidth="545.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <GridPane layoutX="32.0" layoutY="27.0" prefHeight="135.0" prefWidth="529.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="58.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="201.0" />
@@ -25,22 +25,21 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Hora" GridPane.rowIndex="1" />
-            <TextField fx:id="txtHora" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="labelErrorName" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Id" />
+            <Label text="Data" GridPane.rowIndex="1" />
+            <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtData" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="labelErrorData" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="Save" />
                   <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" text="Cancel" />
                </children>
             </HBox>
-            <TextField fx:id="txtDia" GridPane.columnIndex="1" />
-            <Label text="Dia" />
-            <Label layoutX="10.0" layoutY="15.0" text="Dia" />
-            <Label text="Saindo de" GridPane.rowIndex="2" />
-            <Label text="Indo para" GridPane.rowIndex="3" />
-            <TextField fx:id="txtSaindoDe" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtIndoPara" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Passageiro Id" GridPane.rowIndex="2" />
+            <Label text="Passageiro nome" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPassageiroId" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtPassageiroNome" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>

@@ -23,17 +23,18 @@ public class ViagemDaoJDBC implements ViagemDao {
 	}
 	
 	@Override
-	public Viagem findByDia(String dia) {
+	public Viagem findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM viagem WHERE dia = ?");
-			st.setString(0, dia);
+				"SELECT * FROM viagem WHERE Id = ?");
+			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
 				Viagem obj = new Viagem();
-				obj.setDia(rs.getString("Dia"));
+				obj.setId(rs.getInt("Id"));
+				obj.setData(rs.getString("Data"));
 				
 				return obj;
 			}
@@ -54,14 +55,15 @@ public class ViagemDaoJDBC implements ViagemDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-				"SELECT * FROM department ORDER BY Name");
+				"SELECT * FROM viagem ORDER BY Data");
 			rs = st.executeQuery();
 
 			List<Viagem> list = new ArrayList<>();
 
 			while (rs.next()) {
 				Viagem obj = new Viagem();
-				obj.setDia(rs.getString("dia"));
+				obj.setId(rs.getInt("Id"));
+				obj.setData(rs.getString("Data"));
 				list.add(obj);
 			}
 			return list;
@@ -81,20 +83,20 @@ public class ViagemDaoJDBC implements ViagemDao {
 		try {
 			st = conn.prepareStatement(
 				"INSERT INTO viagem " +
-				"(Nome) " +
+				"(Data) " +
 				"VALUES " +
 				"(?)", 
 				Statement.RETURN_GENERATED_KEYS);
 
-			st.setString(1, obj.getDia());
+			
 
 			int rowsAffected = st.executeUpdate();
 			
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
-					String dia = rs.getString("dia");
-					obj.setDia(dia);
+					int id = rs.getInt(1);
+					obj.setId(id);
 				}
 			}
 			else {
@@ -115,9 +117,11 @@ public class ViagemDaoJDBC implements ViagemDao {
 		try {
 			st = conn.prepareStatement(
 				"UPDATE viagem " +
-				"WHERE Dia = ?");
+				"SET Data = ? " +
+				"WHERE Id = ?");
 
-			st.setString(1, obj.getDia());
+			st.setInt(1, obj.getId());
+			
 
 			st.executeUpdate();
 		}
@@ -130,13 +134,13 @@ public class ViagemDaoJDBC implements ViagemDao {
 	}
 
 	@Override
-	public void deleteByDia(String dia) {
+	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-				"DELETE FROM viagem WHERE Dia = ?");
+				"DELETE FROM viagem WHERE Id = ?");
 
-			st.setString (0, dia);
+			st.setInt(1, id);
 
 			st.executeUpdate();
 		}
@@ -147,18 +151,4 @@ public class ViagemDaoJDBC implements ViagemDao {
 			DB.closeStatement(st);
 		}
 	}
-
-	@Override
-	public void deleteById(String dia) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Viagem findById(String dia) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }

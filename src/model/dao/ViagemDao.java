@@ -8,9 +8,7 @@ public interface ViagemDao {
 
 	void insert(Viagem obj);
 	void update(Viagem obj);
-	void deleteById(String dia);
-	Viagem findById(String dia);
+	void deleteById(Integer id);
+	Viagem findById(Integer id);
 	List<Viagem> findAll();
-	Viagem findByDia(String dia);
-	void deleteByDia(String dia);
 }
