@@ -12,5 +12,4 @@ public interface PassageiroDao {
 	void deleteById(Integer id);
 	Passageiro findById(Integer id);
 	List<Passageiro> findAll();
-	List<Passageiro> findByViagem(Viagem viagem);
 }

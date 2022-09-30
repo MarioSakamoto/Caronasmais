@@ -34,7 +34,7 @@ public class ViagemDaoJDBC implements ViagemDao {
 			if (rs.next()) {
 				Viagem obj = new Viagem();
 				obj.setId(rs.getInt("Id"));
-				obj.setData(rs.getString("Data"));
+				obj.setData(new java.util.Date(rs.getTimestamp("Data").getTime()));
 				
 				return obj;
 			}
@@ -63,7 +63,8 @@ public class ViagemDaoJDBC implements ViagemDao {
 			while (rs.next()) {
 				Viagem obj = new Viagem();
 				obj.setId(rs.getInt("Id"));
-				obj.setData(rs.getString("Data"));
+				obj.setData(new java.util.Date(rs.getTimestamp("Data").getTime()));
+				obj.setHora(rs.getTime("Hora").toLocalTime());
 				list.add(obj);
 			}
 			return list;

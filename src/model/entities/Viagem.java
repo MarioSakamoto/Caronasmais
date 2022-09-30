@@ -1,8 +1,8 @@
 package model.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class Viagem implements Serializable {
@@ -10,13 +10,13 @@ public class Viagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private LocalDate data;
+	private Date data;
 	private LocalTime hora;
 	
 	public Viagem() {
 	}
 	
-	public Viagem(Integer id, LocalDate data, LocalTime hora) {
+	public Viagem(Integer id, Date data, LocalTime hora) {
 		super();
 		this.id = id;
 		this.data = data;
@@ -31,12 +31,12 @@ public class Viagem implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setData(Date date) {
+		this.data = date;
 	}
 
 	public LocalTime getHora() {
@@ -68,8 +68,5 @@ public class Viagem implements Serializable {
 	public String toString() {
 		return "Viagem [id=" + id + ", data=" + data + ", hora=" + hora + "]";
 	}
-	
-	
-
 	
 }
