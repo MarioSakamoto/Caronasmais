@@ -1,6 +1,8 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Viagem implements Serializable {
@@ -8,15 +10,17 @@ public class Viagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private String data;
+	private LocalDate data;
+	private LocalTime hora;
 	
 	public Viagem() {
 	}
-
-	public Viagem(Integer id, String data) {
+	
+	public Viagem(Integer id, LocalDate data, LocalTime hora) {
 		super();
 		this.id = id;
 		this.data = data;
+		this.hora = hora;
 	}
 
 	public Integer getId() {
@@ -27,21 +31,25 @@ public class Viagem implements Serializable {
 		this.id = id;
 	}
 
-	public String getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public LocalTime getHora() {
+		return hora;
+	}
+
+	public void setHora(LocalTime hora) {
+		this.hora = hora;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(data, id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -53,11 +61,15 @@ public class Viagem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Viagem other = (Viagem) obj;
-		return Objects.equals(data, other.data) && Objects.equals(id, other.id);
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Viagem [id=" + id + ", data=" + data + "]";
+		return "Viagem [id=" + id + ", data=" + data + ", hora=" + hora + "]";
 	}
+	
+	
+
+	
 }

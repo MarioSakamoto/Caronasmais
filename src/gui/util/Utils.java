@@ -2,8 +2,11 @@ package gui.util;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javafx.event.ActionEvent;
@@ -102,4 +105,12 @@ public class Utils {
 		});
 	}
 
+	public static List<LocalTime> createHorario(){
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+		
+		List<LocalTime> list = Arrays.asList(LocalTime.parse("09:00", dtf), LocalTime.parse("12:00", dtf),
+				LocalTime.parse("15:00", dtf),LocalTime.parse("18:00", dtf), LocalTime.parse("21:00", dtf));
+		return list;
+	}
+	
 }
