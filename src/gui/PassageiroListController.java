@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -31,8 +30,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Passageiro;
-import model.services.ViagemService;
 import model.services.PassageiroService;
+import model.services.ViagemService;
 
 public class PassageiroListController implements Initializable, DataChangeListener {
 
@@ -49,15 +48,9 @@ public class PassageiroListController implements Initializable, DataChangeListen
 	
 	@FXML
 	private TableColumn<Passageiro, String> tableColumnTelefone;
-	
+		
 	@FXML
-	private TableColumn<Passageiro, String> tableColumnSaindoDe;
-	
-	@FXML
-	private TableColumn<Passageiro, String> tableColumnIndoPara;
-	
-	@FXML
-	private TableColumn<Passageiro, String> tableColumnViagemId;
+	private TableColumn<Passageiro, Integer> tableColumnViagem;
 
 	@FXML
 	private TableColumn<Passageiro, Passageiro> tableColumnEditar;
@@ -87,12 +80,10 @@ public class PassageiroListController implements Initializable, DataChangeListen
 	}
 
 	private void initializeNodes() {
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tableColumnSaindoDe.setCellValueFactory(new PropertyValueFactory<>("saindo de"));
-		tableColumnIndoPara.setCellValueFactory(new PropertyValueFactory<>("indo para"));
-		tableColumnViagemId.setCellValueFactory(new PropertyValueFactory<>("viagem id"));
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+		tableColumnViagem.setCellValueFactory(new PropertyValueFactory<>("Viagem_Id"));
 				
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPassageiro.prefHeightProperty().bind(stage.heightProperty());
@@ -105,8 +96,8 @@ public class PassageiroListController implements Initializable, DataChangeListen
 		List<Passageiro> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewPassageiro.setItems(obsList);
-		initEditButtons();
-		initRemoveButtons();
+		initEditButton();
+		initRemoveButton();
 	}
 
 	private void createDialogForm(Passageiro obj, String absoluteName, Stage parentStage) {
@@ -140,7 +131,7 @@ public class PassageiroListController implements Initializable, DataChangeListen
 		updateTableView();
 	}
 
-	private void initEditButtons() {
+	private void initEditButton() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<Passageiro, Passageiro>() {
 			private final Button button = new Button("editar");
@@ -159,7 +150,7 @@ public class PassageiroListController implements Initializable, DataChangeListen
 		});
 	}
 
-	private void initRemoveButtons() {
+	private void initRemoveButton() {
 		tableColumnRemover.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnRemover.setCellFactory(param -> new TableCell<Passageiro, Passageiro>() {
 			private final Button button = new Button("remover");

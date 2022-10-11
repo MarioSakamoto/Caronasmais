@@ -10,17 +10,20 @@ public class Viagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	private String trajeto;
 	private Date data;
 	private LocalTime hora;
 	
 	public Viagem() {
 	}
 	
-	public Viagem(Integer id, Date data, LocalTime hora) {
+	public Viagem(Integer id, String trajeto, Date data, LocalTime hora) {
 		super();
 		this.id = id;
+		this.trajeto = trajeto;
 		this.data = data;
 		this.hora = hora;
+		
 	}
 
 	public Integer getId() {
@@ -29,6 +32,14 @@ public class Viagem implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getTrajeto() {
+		return trajeto;
+	}
+
+	public void setTrajeto(String trajeto) {
+		this.trajeto = trajeto;
 	}
 
 	public Date getData() {
@@ -46,7 +57,7 @@ public class Viagem implements Serializable {
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

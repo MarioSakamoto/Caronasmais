@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.mysql.jdbc.Statement;
 
@@ -15,7 +13,6 @@ import db.DB;
 import db.DbException;
 import model.dao.PassageiroDao;
 import model.entities.Passageiro;
-import model.entities.Viagem;
 
 public class PassageiroDaoJDBC implements PassageiroDao {
 
@@ -31,17 +28,14 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO passageiro "
-					+ "(Id, Nome, Telefone, SaindoDe, IndoPara, ViagemId) "
+					+ "(Id, Nome, Telefone, Viagem_Id) "
 					+ "VALUES "
-					+ "(?, ?, ?, ?, ?, ?)",
+					+ "(DEFAULT,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setInt(1, obj.getId());
-			st.setString(2, obj.getNome());
-			st.setString(3, obj.getTelefone());
-			st.setString(4, obj.getSaindoDe());
-			st.setString(5, obj.getIndoPara());
-			st.setInt(6, obj.getViagem().getId());
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getTelefone());
+			st.setInt(3, obj.getViagem());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -71,15 +65,13 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		try {
 			st = conn.prepareStatement(
 					"UPDATE passageiro "
-					+ "SET Id = ?, Nome = ?, Telefone = ?, SaindoDe = ?, IndoPara = ?, ViagemId = ? "
+					+ "SET Nome = ?, Telefone = ?, Viagem_Id = ?"
 					+ "WHERE Id = ?");
 			
-			st.setInt(1, obj.getId());
-			st.setString(2, obj.getNome());
-			st.setString(3, obj.getTelefone());
-			st.setString(4, obj.getSaindoDe());
-			st.setString(5, obj.getIndoPara());
-			st.setInt(6, obj.getViagem().getId());
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getTelefone());
+			st.setInt(3, obj.getViagem());
+			st.setInt(4, obj.getId());
 			
 			st.executeUpdate();
 		}
@@ -115,16 +107,17 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT passageiro.*,viagem.Nome as ViagemName "
-					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemId = viagem.Id "
+					"SELECT * FROM passageiro"
 					+ "WHERE passageiro.Id = ?");
 			
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Viagem viagem = instantiateViagem(rs);
-				Passageiro obj = instantiatePassageiro(rs, viagem);
+				Passageiro obj = new Passageiro();
+				obj.setId(rs.getInt("Id"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setViagem(rs.getInt("Viagem_Id"));
 				return obj;
 			}
 			return null;
@@ -138,51 +131,26 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		}
 	}
 
-	private Passageiro instantiatePassageiro(ResultSet rs, Viagem viagem) throws SQLException {
-		Passageiro obj = new Passageiro();
-		obj.setId(rs.getInt("Id"));
-		obj.setNome(rs.getString("Nome"));
-		obj.setTelefone(rs.getString("Telefone"));
-		obj.setSaindoDe(rs.getString("SaindoDe"));
-		obj.setIndoPara(rs.getString("IndoPara"));
-		obj.setViagem(viagem);
-				
-		return obj;
-	}
-
-	private Viagem instantiateViagem(ResultSet rs) throws SQLException {
-		Viagem viagem = new Viagem();
-		viagem.setId(rs.getInt("ViagemId"));
-		viagem.setData(rs.getString("Data"));
-		return viagem;
-	}
-
 	@Override
 	public List<Passageiro> findAll() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT passageiro.*,viagem.Nome as ViagemNome "
-					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemId = viagem.Id "
-					+ "ORDER BY Name");
+					"SELECT * FROM passageiro"
+					+ " ORDER BY Nome");
 			
 			rs = st.executeQuery();
 			
 			List<Passageiro> list = new ArrayList<>();
-			Map<Integer, Viagem> map = new HashMap<>();
 			
 			while (rs.next()) {
 				
-				Viagem viagem = map.get(rs.getInt("ViagemId"));
-				
-				if (viagem == null) {
-					viagem = instantiateViagem(rs);
-					map.put(rs.getInt("ViagemId"), viagem);
-				}
-				
-				Passageiro obj = instantiatePassageiro(rs, viagem);
+				Passageiro obj = new Passageiro();
+				obj.setId(rs.getInt("Id"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setViagem(rs.getInt("Viagem_Id"));
 				list.add(obj);
 			}
 			return list;
@@ -196,45 +164,4 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 		}
 	}
 
-	@Override
-	public List<Passageiro> findByViagem(Viagem viagem) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement(
-					"SELECT passageiro.*,viagem.Nome as ViagemNome "
-					+ "FROM passageiro INNER JOIN viagem "
-					+ "ON passageiro.ViagemId = viagem.Id "
-					+ "WHERE ViagemId = ? "
-					+ "ORDER BY Name");
-			
-			st.setInt(1, viagem.getId());
-			
-			rs = st.executeQuery();
-			
-			List<Passageiro> list = new ArrayList<>();
-			Map<Integer, Viagem> map = new HashMap<>();
-			
-			while (rs.next()) {
-				
-				Viagem viagemId = map.get(rs.getInt("ViagemId"));
-				
-				if (viagem == null) {
-					viagem = instantiateViagem(rs);
-					map.put(rs.getInt("ViagemId"), viagem);
-				}
-				
-				Passageiro obj = instantiatePassageiro(rs, viagem);
-				list.add(obj);
-			}
-			return list;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
-	}
 }

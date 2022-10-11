@@ -51,25 +51,13 @@ public class PassageiroFormController implements Initializable {
 	private TextField txtTelefone;
 
 	@FXML
-	private TextField txtSaindoDe;
-
-	@FXML
-	private TextField txtIndoPara;
-
-	@FXML
-	private ComboBox<Viagem> comboBoxViagemId;
+	private ComboBox<Viagem> cbViagem;
 
 	@FXML
 	private Label labelErrorNome;
 
 	@FXML
 	private Label labelErrorTelefone;
-
-	@FXML
-	private Label labelErrorSaindoDe;
-
-	@FXML
-	private Label labelErrorIndoPara;
 
 	@FXML
 	private Button btSalvar;
@@ -135,19 +123,8 @@ public class PassageiroFormController implements Initializable {
 			exception.addError("telefone", "Field can't be empty");
 		}
 		obj.setTelefone(txtTelefone.getText());
-		
-		if (txtSaindoDe.getText() == null || txtSaindoDe.getText().trim().equals("")) {
-			exception.addError("saindo de", "Field can't be empty");
-		}
-		obj.setTelefone(txtSaindoDe.getText());
 
-
-		if (txtIndoPara.getText() == null || txtIndoPara.getText().trim().equals("")) {
-			exception.addError("indo para", "Field can't be empty");
-		}
-		obj.setIndoPara(txtIndoPara.getText());
-		
-		obj.setViagem(comboBoxViagemId.getValue());
+		obj.setViagem(cbViagem.getValue().getId());
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;
@@ -171,9 +148,6 @@ public class PassageiroFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtNome, 100);
 		Constraints.setTextFieldMaxLength(txtTelefone, 30);
-		Constraints.setTextFieldMaxLength(txtSaindoDe, 100);
-		Constraints.setTextFieldMaxLength(txtIndoPara, 100);
-				
 		initializeComboBoxViagem();
 	}
 
@@ -181,16 +155,16 @@ public class PassageiroFormController implements Initializable {
 		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
+
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getNome());
 		txtTelefone.setText(entity.getTelefone());
-		txtSaindoDe.setText(entity.getSaindoDe());
-		txtIndoPara.setText(entity.getIndoPara());
 
-		if (entity.getViagem() == null) {
-			comboBoxViagemId.getSelectionModel().selectFirst();
+		if (cbViagem == null) {
+			cbViagem.getSelectionModel().selectFirst();
+		
 		} else {
-			comboBoxViagemId.setValue(entity.getViagem());
+			cbViagem.setValue(viagemService.findById(entity.getViagem()));
 		}
 	}
 
@@ -200,7 +174,7 @@ public class PassageiroFormController implements Initializable {
 		}
 		List<Viagem> list = viagemService.findAll();
 		obsList = FXCollections.observableArrayList(list);
-		comboBoxViagemId.setItems(obsList);
+		cbViagem.setItems(obsList);
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -208,9 +182,6 @@ public class PassageiroFormController implements Initializable {
 
 		labelErrorNome.setText((fields.contains("nome") ? errors.get("nome") : ""));
 		labelErrorTelefone.setText((fields.contains("telefone") ? errors.get("telefone") : ""));
-		labelErrorSaindoDe.setText((fields.contains("saindo de") ? errors.get("saindo de") : ""));
-		labelErrorIndoPara.setText((fields.contains("indo para") ? errors.get("indo para") : ""));
-		
 	}
 
 	private void initializeComboBoxViagem() {
@@ -218,12 +189,12 @@ public class PassageiroFormController implements Initializable {
 			@Override
 			protected void updateItem(Viagem item, boolean empty) {
 				super.updateItem(item, empty);
-				setText(empty ? "" : item.getData());
-			}
+				setText(empty ? "" : item.getTrajeto());
 
+			}
 		};
-		comboBoxViagemId.setCellFactory(factory);
-		comboBoxViagemId.setButtonCell(factory.call(null));
+		cbViagem.setCellFactory(factory);
+		cbViagem.setButtonCell(factory.call(null));
 	}
 
 }

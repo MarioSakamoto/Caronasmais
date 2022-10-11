@@ -1,7 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -17,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Viagem;
@@ -35,13 +41,13 @@ public class ViagemFormController implements Initializable {
 	private TextField txtId;
 
 	@FXML
-	private TextField txtData;
-	
+	private TextField txtTrajeto;
+
 	@FXML
-	private TextField txtPassageiroId;
-	
+	private DatePicker dpData;
+
 	@FXML
-	private TextField txtPassageiroNome;
+	private TextField txtHora;
 
 	@FXML
 	private Label labelErrorData;
@@ -77,42 +83,54 @@ public class ViagemFormController implements Initializable {
 			service.saveOrUpdate(entity);
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
-			
-		}
-		catch (ValidationException e) {
+
+		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
-		}
-		catch (DbException e) {
+		} catch (DbException e) {
 			Alerts.showAlert("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
 
 	}
 
 	private void notifyDataChangeListeners() {
-		for(DataChangeListener listener : dataChangeListeners) {
+		for (DataChangeListener listener : dataChangeListeners) {
 			listener.onDataChanged();
 		}
 	}
 
 	private Viagem getFormData() {
+
 		Viagem obj = new Viagem();
 
 		ValidationException exception = new ValidationException("Validation error");
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
-	
+		if(txtTrajeto == null) {
+			exception.addError("Trajeto", "Trajeto não pode ser nulo!");
 		
-//		if (txtData.getValue() == null) {
-//			exception.addError("Data", "Field can't be empty");
-//		} else {
-//			Instant instant = Instant.from(txtData.getValue().atStartOfDay(ZoneId.systemDefault()));
-//			obj.setData(Date.from(instant));
-//		}
-		
-		if(exception.getErrors().size() > 0) {
+		} else {
+			obj.setTrajeto(txtTrajeto.getText());
+		}
+
+		if (dpData == null) {
+			exception.addError("Data", "Data não pode ficar vazia!");
+
+		} else {
+			Instant instant = Instant.from(dpData.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setData(Date.from(instant));
+		}
+
+		if (txtHora == null) {
+			exception.addError("Hora", "Hora não pode ficar vazia!");
+
+		} else {
+			obj.setHora(LocalTime.parse(txtHora.getText()));
+		}
+
+		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
-		
+
 		return obj;
 	}
 
@@ -129,21 +147,34 @@ public class ViagemFormController implements Initializable {
 
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtData, 80);
 	}
 
 	public void updateFormData() {
 		if (entity == null) {
-			throw new IllegalStateException("Entity was null");
+			throw new IllegalStateException("Entidade nula!");
 		}
-		txtId.setText(String.valueOf(entity.getId()));
-		
+
+		if (entity.getId() != null) {
+			txtId.setText(String.valueOf(entity.getId()));
+		}
+
+		if (entity.getTrajeto() != null) {
+			txtTrajeto.setText(entity.getTrajeto());
+		}
+
+		if (entity.getData() != null) {
+			dpData.setValue(LocalDate.ofInstant(entity.getData().toInstant(), ZoneId.systemDefault()));
+		}
+
+		if (entity.getHora() != null) {
+			txtHora.setText(entity.getHora().toString());
+		}
 	}
-		
+
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
-		
-		if(fields.contains("data")) {
+
+		if (fields.contains("data")) {
 			labelErrorData.setText(errors.get("data"));
 		}
 	}

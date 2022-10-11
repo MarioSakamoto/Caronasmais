@@ -11,17 +11,17 @@ public class Passageiro implements Serializable {
 	private String nome;
 	private String telefone;
 	
-	private Viagem viagem;
+	private Integer viagem_Id;
 	
 	public Passageiro() {
 	}
 
-	public Passageiro(Integer id, String nome, String telefone, Viagem viagem) {
+	public Passageiro(Integer id, String nome, String telefone, Integer viagem_Id) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
-		this.viagem = viagem;
+		this.viagem_Id = viagem_Id;
 	}
 
 	public Integer getId() {
@@ -47,13 +47,14 @@ public class Passageiro implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
 
-	public Viagem getViagem() {
-		return viagem;
+	public Integer getViagem() {
+		return viagem_Id;
 	}
 
-	public void setViagem(Viagem viagem) {
-		this.viagem = viagem;
+	public void setViagem(Integer viagem_Id) {
+		this.viagem_Id = viagem_Id;
 	}
 
 	@Override

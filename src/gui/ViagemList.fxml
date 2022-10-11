@@ -27,11 +27,11 @@
       <TableView fx:id="tableViewViagem" prefHeight="321.0" prefWidth="509.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
+            <TableColumn fx:id="tableColumnTrajeto" prefWidth="139.0" text="Trajeto" />
           <TableColumn fx:id="tableColumnData" prefWidth="139.0" text="Data" />
-            <TableColumn fx:id="tableColumnPassageiroId" prefWidth="89.0" text="Passageiro Id" />
-            <TableColumn fx:id="tableColumnPassageiroNome" prefWidth="112.0" text="Passageiro Nome" />
-            <TableColumn fx:id="tableColumnEDIT" prefWidth="56.0" />
-            <TableColumn fx:id="tableColumnREMOVE" prefWidth="93.0" />
+            <TableColumn fx:id="tableColumnHora" prefWidth="89.0" text="Hora" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="76.0" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="73.0" />
         </columns>
       </TableView>
    </children>

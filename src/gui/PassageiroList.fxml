@@ -21,7 +21,7 @@
       </Label>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btAddNovo" mnemonicParsing="false" onAction="#onBtAddNovoAction" text="Add novo" />
+          <Button fx:id="btAddNovo" mnemonicParsing="false" onAction="#onBtAddNovoAction" text="Novo Passageiro" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewPassageiro" prefHeight="200.0" prefWidth="200.0">
@@ -29,9 +29,7 @@
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="tableColumnNome" prefWidth="75.0" text="Nome" />
             <TableColumn fx:id="tableColumnTelefone" prefWidth="75.0" text="Telefone" />
-            <TableColumn fx:id="tableColumnSaindoDe" prefWidth="75.0" text="Saindo de" />
-            <TableColumn fx:id="tableColumnIndoPara" prefWidth="75.0" text="Indo para" />
-            <TableColumn fx:id="tableColumnViagemId" prefWidth="75.0" text="Viagem Id" />
+            <TableColumn fx:id="tableColumnViagem" prefWidth="75.0" text="Viagem_Id" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="104.0" />
             <TableColumn fx:id="tableColumnRemover" prefWidth="88.0" />
         </columns>

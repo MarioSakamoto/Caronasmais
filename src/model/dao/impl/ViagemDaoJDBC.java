@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,9 @@ public class ViagemDaoJDBC implements ViagemDao {
 			if (rs.next()) {
 				Viagem obj = new Viagem();
 				obj.setId(rs.getInt("Id"));
+				obj.setTrajeto(rs.getString("Trajeto"));
 				obj.setData(new java.util.Date(rs.getTimestamp("Data").getTime()));
-				
+				obj.setHora(rs.getTime("Hora").toLocalTime());				
 				return obj;
 			}
 			return null;
@@ -63,6 +65,7 @@ public class ViagemDaoJDBC implements ViagemDao {
 			while (rs.next()) {
 				Viagem obj = new Viagem();
 				obj.setId(rs.getInt("Id"));
+				obj.setTrajeto(rs.getString("Trajeto"));
 				obj.setData(new java.util.Date(rs.getTimestamp("Data").getTime()));
 				obj.setHora(rs.getTime("Hora").toLocalTime());
 				list.add(obj);
@@ -84,12 +87,13 @@ public class ViagemDaoJDBC implements ViagemDao {
 		try {
 			st = conn.prepareStatement(
 				"INSERT INTO viagem " +
-				"(Data) " +
-				"VALUES " +
-				"(?)", 
+				"(Id, Trajeto, Data, Hora) " +
+				"VALUES (DEFAULT,?,?,?)", 
 				Statement.RETURN_GENERATED_KEYS);
-
 			
+			st.setString(1, obj.getTrajeto());
+			st.setDate(2, new java.sql.Date(obj.getData().getTime()));
+			st.setTime(3, Time.valueOf(obj.getHora()));
 
 			int rowsAffected = st.executeUpdate();
 			
@@ -118,11 +122,13 @@ public class ViagemDaoJDBC implements ViagemDao {
 		try {
 			st = conn.prepareStatement(
 				"UPDATE viagem " +
-				"SET Data = ? " +
+				"SET Trajeto = ?, Data = ?, Hora = ?" +
 				"WHERE Id = ?");
 
-			st.setInt(1, obj.getId());
-			
+			st.setString(1, obj.getTrajeto());
+			st.setDate(2, new java.sql.Date(obj.getData().getTime()));
+			st.setTime(3, Time.valueOf(obj.getHora()));
+			st.setInt(4, obj.getId());
 
 			st.executeUpdate();
 		}
@@ -142,7 +148,6 @@ public class ViagemDaoJDBC implements ViagemDao {
 				"DELETE FROM viagem WHERE Id = ?");
 
 			st.setInt(1, id);
-
 			st.executeUpdate();
 		}
 		catch (SQLException e) {

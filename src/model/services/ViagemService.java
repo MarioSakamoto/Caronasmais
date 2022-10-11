@@ -14,6 +14,11 @@ public class ViagemService {
 		return dao.findAll();
 	}
 	
+	public Viagem findById(Integer id) {
+		return dao.findById(id);
+		
+	}
+	
 	public void saveOrUpdate(Viagem obj) {
 		if(obj.getId() == null) {
 			dao.insert(obj);
