@@ -33,9 +33,10 @@ public class PassageiroDaoJDBC implements PassageiroDao {
 					+ "(DEFAULT,?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 			
-			st.setString(1, obj.getNome());
-			st.setString(2, obj.getTelefone());
-			st.setInt(3, obj.getViagem());
+			st.setInt(1, obj.getId());
+			st.setString(2, obj.getNome());
+			st.setString(3, obj.getTelefone());
+			st.setInt(4, obj.getViagem());
 			
 			int rowsAffected = st.executeUpdate();
 			
